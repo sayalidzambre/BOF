@@ -1,0 +1,72 @@
+{% extends "layout.html"%}
+{% block content %}
+<div class="container">
+   <form method="post" action="/Positivetrend">
+       <div class="row">
+           <div class="col-md-3"></div>
+           <div class="col-md-3">
+               <label>Company Symbol</label>
+                   <select name="symbol" class="form-control">
+                       {% if fetch == false %}
+                            {% for symbol in symbols%}
+                                <option value="{{symbol}}">{{symbol}}</option>
+                            {% endfor %}
+                       {% else %}
+                            {% for symbol in symbols%}
+                                {% if data.symbol == symbol %}
+                                    <option value="{{symbol}}" selected>{{symbol}}</option>
+                                {% else %}
+                                    <option value="{{symbol}}">{{symbol}}</option>
+                                {% endif %}
+                            {% endfor%}
+                       {% endif %}
+                   </select>
+           </div>
+           <div class="col-md-3">
+               <label>&nbsp;</label><br>
+               <input type="submit" value="Calculate trend" class="btn btn-primary">
+           </div>
+           <div class="col-md-3"></div>
+       </div>
+
+       <br>
+       {% if fetch == true %}
+       <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{data.symbol}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Maximum positive trend period</h6>
+                        <hr>
+                        <table class="table table-borderless table-sm">
+                              <tr>
+                                  <td style="text-align:center;vertical-align:top;" width="60%"><b>Period Length</b></td>
+                                  <td style="text-align:left;vertical-align:top;"><b>From:</b></td>
+                              </tr>
+                              <tr>
+                                <td style="text-align:center;vertical-align:middle;" rowspan="3">
+                                    <font style="font-size:60px;" color="blue">{{result[0]}}</font><br>
+                                    consecutive working days.
+                                </td>
+                                <td>{{result[2]}}</td>
+                              </tr>
+                              <tr>
+                                  <td><b>To:</b></td>
+                              </tr>
+                              <tr>
+                                <td>{{result[1]}}</td>
+                              </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+       </div>
+       {% endif %}
+
+   </form>
+</div>
+
+{% endblock %}

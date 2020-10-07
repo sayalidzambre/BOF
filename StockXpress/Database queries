@@ -1,0 +1,36 @@
+CREATE TABLE Company_meta_data (
+id INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+symbol VARCHAR(10) NOT NULL UNIQUE,
+last_refreshed VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE table_name (
+recorded_date DATE PRIMARY KEY,
+open DOUBLE(10,4) NOT NULL,
+high DOUBLE(10,4) NOT NULL,
+low DOUBLE(10,4) NOT NULL,
+close DOUBLE(10,4) NOT NULL,
+adjusted_close DOUBLE(10,4) NOT NULL,
+volume int NOT NULL,
+dividend_amount DOUBLE(6,4) NOT NULL,
+split_coefficient DOUBLE(6,4) NOT NULL
+);
+
+INSERT INTO Company_meta_data(symbol, last_refreshed) VALUES('MSFT', '2019-07-30');
+INSERT INTO table_name values('2019-07-30',1,2,3,4,5,6,7,8);
+
+select recorded_date from MSFT order by recorded_date desc limit 1;
+SELECT symbol FROM Company_meta_data;
+
+UPDATE Company_meta_data SET last_refreshed = '' where symbol='';
+
+
+UPDATE Company_meta_data SET last_refreshed = '2019-07-28';
+
+delete from DELL where recorded_date='2019-07-31';
+delete from DELL where recorded_date='2019-07-30';
+delete from DELL where recorded_date='2019-07-29';
+
+delete from MSFT where recorded_date='2019-07-31';
+delete from MSFT where recorded_date='2019-07-30';
+delete from MSFT where recorded_date='2019-07-29';

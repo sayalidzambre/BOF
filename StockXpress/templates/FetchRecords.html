@@ -1,0 +1,108 @@
+{% extends "layout.html"%}
+{% block content %}
+<div class="container">
+   <form method="post" action="/fetchStock">
+       <div class="row">
+           <div class="col-md-2"></div>
+           <div class="col-md-4">
+               <label>Company Symbol</label>
+                   <select name="symbol" class="form-control">
+                       {% if fetch == false %}
+                            {% for symbol in symbols%}
+                                <option value="{{symbol}}">{{symbol}}</option>
+                            {% endfor %}
+                       {% else %}
+                            {% for symbol in symbols%}
+                                {% if data.symbol == symbol %}
+                                    <option value="{{symbol}}" selected>{{symbol}}</option>
+                                {% else %}
+                                    <option value="{{symbol}}">{{symbol}}</option>
+                                {% endif %}
+                            {% endfor%}
+                       {% endif %}
+                   </select>
+           </div>
+           <div class="col-md-4">
+               <label>Date</label>
+               {% if fetch == false %}
+                    <input type="date" name="date" class="form-control" required>
+               {% else %}
+                    <input type="date" name="date" value="{{data.date}}" class="form-control" required>
+               {% endif %}
+           </div>
+           <div class="col-md-2"></div>
+       </div>
+
+       <div class="row">
+           <div class="col-md-2"></div>
+           <div class="col-md-4">
+                <input type="submit" value="Fetch records" class="btn btn-primary" style="margin: 10px 0px 15px;">
+           </div>
+           <div class="col-md-4"></div>
+           <div class="col-md-2"></div>
+       </div>
+
+       {% if fetch == true %}
+       <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card" >
+                    <div class="card-body" style="padding-bottom: 0px;">
+                        <h5 class="card-title">{{data.symbol}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Recorded date : {{result.recorded_date}}</h6>
+                        <hr>
+                        <table class="table table-borderless table-sm">
+                            <tr>
+                              <th width="40%">Open</th>
+                              <td>:</td>
+                              <td>{{result.open}}</td>
+                            </tr>
+                            <tr>
+                              <th>High</th>
+                              <td>:</td>
+                              <td>{{result.high}}</td>
+                            </tr>
+                            <tr>
+                              <th>Low</th>
+                              <td>:</td>
+                              <td>{{result.low}}</td>
+                            </tr>
+                            <tr>
+                              <th>Close</th>
+                              <td>:</td>
+                              <td>{{result.close}}</td>
+                            </tr>
+                            <tr>
+                              <th>Adjusted close</th>
+                              <td>:</td>
+                              <td>{{result.open}}</td>
+                            </tr>
+                            <tr>
+                              <th>Volume</th>
+                              <td>:</td>
+                              <td>{{result.volume}}</td>
+                            </tr>
+                            <tr>
+                              <th>Dividend amount</th>
+                              <td>:</td>
+                              <td>{{result.dividend_amount}}</td>
+                            </tr>
+                            <tr>
+                              <th>Split coefficient</th>
+                              <td>:</td>
+                              <td>{{result.split_coefficient}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+           <br>
+       </div>
+       {% endif %}
+
+   </form>
+<p style="visibility:hidden;">Just a hidden element</p>
+</div>
+
+{% endblock %}

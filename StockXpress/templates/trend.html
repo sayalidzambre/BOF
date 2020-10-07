@@ -1,0 +1,57 @@
+{% extends "layout.html"%}
+{% block content %}
+<div class="container">
+   <form method="post" action="/Stocktrend">
+       <div class="row">
+           <div class="col-md-3"></div>
+           <div class="col-md-3">
+               <label>Company Symbol</label>
+                   <select name="symbol" class="form-control">
+                       {% if fetch == false %}
+                            {% for symbol in symbols%}
+                                <option value="{{symbol}}">{{symbol}}</option>
+                            {% endfor %}
+                       {% else %}
+                            {% for symbol in symbols%}
+                                {% if data.symbol == symbol %}
+                                    <option value="{{symbol}}" selected>{{symbol}}</option>
+                                {% else %}
+                                    <option value="{{symbol}}">{{symbol}}</option>
+                                {% endif %}
+                            {% endfor%}
+                       {% endif %}
+                   </select>
+           </div>
+           <div class="col-md-3">
+               <label>&nbsp;</label><br>
+               <input type="submit" value="Calculate trend" class="btn btn-primary">
+           </div>
+           <div class="col-md-3"></div>
+       </div>
+
+       <br>
+       {% if fetch == true %}
+       <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <th width="50%" style="text-align:center">Recorded Date</th>
+                        <th style="text-align:center">Trend</th>
+                    </tr>
+                    {% for rec in result %}
+                       <tr>
+                           <td style="text-align:center">{{rec.recorded_date}}</td>
+                           <td style="text-align:center">{{rec.trend}}</td>
+                       </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-3"></div>
+       </div>
+       {% endif %}
+
+   </form>
+</div>
+
+{% endblock %}
